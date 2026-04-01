@@ -1056,33 +1056,40 @@
   };
 
   function showPage(page) {
-    pages.forEach(id => {
-      const section = document.getElementById(id);
-      if (section) {
-        section.style.display = (id === page) ? 'flex' : 'none';
-      }
-    });
+  pages.forEach(id => {
+    const section = document.getElementById(id);
+    if (section) {
+      section.style.display = (id === page) ? 'flex' : 'none';
+    }
+  });
 
+  const isMobileOrTablet = window.innerWidth <= 1024;
+
+  if (isMobileOrTablet) {
+    document.body.style.overflowX = 'hidden';
+    document.body.style.overflowY = 'auto';
+  } else {
     document.body.style.overflow =
       (page === 'projects' || page === 'works' || page === 'mini-projects') ? 'auto' : 'hidden';
-
-    window.scrollTo(0, 0);
-
-    if (page === 'research') {
-      renderCarousel('research');
-    }
-
-    if (page === 'works') {
-      renderCarousel('bri');
-      renderCarousel('ptdi');
-    }
-
-    if (page === 'projects') {
-      renderCarousel('monterro');
-      renderCarousel('bit-o');
-      renderCarousel('PdP');
-    }
   }
+
+  window.scrollTo(0, 0);
+
+  if (page === 'research') {
+    renderCarousel('research');
+  }
+
+  if (page === 'works') {
+    renderCarousel('bri');
+    renderCarousel('ptdi');
+  }
+
+  if (page === 'projects') {
+    renderCarousel('monterro');
+    renderCarousel('bit-o');
+    renderCarousel('PdP');
+  }
+}
 
   function goTo(page, push = true) {
     showPage(page);
