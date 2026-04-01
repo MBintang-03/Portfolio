@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Syne:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@1,600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@900&display=swap" rel="stylesheet"/>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --page-bg:   #d8d4ce;
+      --island-bg: #e9e5dc;
+      --island-2:  #dedad0;
+      --ink:       #111010;
+      --muted:     #7a756e;
+      --border:    rgba(0,0,0,.08);
+      --radius:    24px;
+      --gap:       12px;
+      --max-w:     940px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--page-bg);
+      font-family: 'Syne', sans-serif;
+      color: var(--ink);
+      min-height: 100vh;
+      padding: 24px 16px;
+      cursor: none;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .cur-dot, .cur-ring {
+      position: fixed; border-radius: 50%; pointer-events: none; z-index: 9999;
+      transform: translate(-50%,-50%);
+      z-index: 20001;
+    }
+    .cur-dot  { width: 7px; height: 7px; background: var(--ink); transition: transform .1s; }
+    .cur-ring { width: 32px; height: 32px; border: 1.5px solid var(--ink); opacity: .35; transition: all .18s ease; }
+
+    .island { background: var(--island-bg); border-radius: var(--radius); overflow: hidden; }
+
+    .section-wrap {
+      width: 100%;
+      max-width: 900px;
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+      margin-bottom: 10%;
+    }
+
+    .menu-wrap {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 12px;
+    }
+    .menu-btn-row {
+      display: flex;
+      align-items: center;
+      background: var(--ink);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: all .35s ease;
+    }
+    .menu-links-expand {
+      display: flex;
+      gap: 0;
+      max-width: 0;
+      overflow: hidden;
+      transition: max-width .35s ease;
+    }
+    .menu-links-expand a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      white-space: nowrap;
+      padding: 14px 18px;
+      opacity: 0;
+      transition: opacity .25s .1s;
+    }
+    .menu-btn-row.open .menu-links-expand { max-width: 300px; }
+    .menu-btn-row.open .menu-links-expand a { opacity: 1; }
+    .menu-toggle {
+      background: var(--ink);
+      color: #fff;
+      border: none;
+      padding: 14px 12px;
+      font-family: 'Syne', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      cursor: none;
+      white-space: nowrap;
+    }
+
+    .hero-island {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 480px;
+      position: relative;
+    }
+    .hero-left {
+      padding: 56px 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .hero-intro {
+      font-family: 'Playfair Display', serif;
+      font-style: normal;
+      margin-bottom: 18px;
+      font-size: clamp(38px, 4.5vw, 60px);
+      font-weight: 700;
+      line-height: 1.06;
+      letter-spacing: -.02em;
+      opacity: 0;
+      animation: fadeUp .6s .35s forwards;
+    }
+    .hero-h1 {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+      opacity: 0;
+      animation: fadeUp .6s .2s forwards;
+    }
+    .hero-sub {
+      margin-top: 20px;
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--muted);
+      max-width: 480px;
+      text-align: justify;
+      opacity: 0;
+      animation: fadeUp .6s .5s forwards;
+    }
+    .hero-cta {
+      margin-top: 36px;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--ink);
+      color: #fff;
+      padding: 14px 26px;
+      border-radius: 14px;
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: none;
+      width: fit-content;
+      opacity: 0;
+      animation: fadeUp .6s .65s forwards;
+      transition: opacity .2s, gap .2s;
+    }
+    .hero-cta:hover { opacity: .85; gap: 18px; }
+    .hero-cta-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,.35);
+      display: grid;
+      place-items: center;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .hero-right {
+      position: relative;
+      overflow: hidden;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      background: #ccc8bc;
+      opacity: 0;
+      animation: fadeIn .9s .15s forwards;
+    }
+    .hero-photo-wrap {
+      width: 300px;
+      height: 540px;
+      border-radius: 0 0 200px 200px;
+      overflow: hidden;
+      background: #b8b4aa;
+    }
+    .hero-photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+    }
+
+    .row-item {
+      background: var(--island-bg);
+      border-radius: 50px;
+      padding: 28px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 24px;
+      font-weight: 700;
+      cursor: none;
+      transition: background .2s;
+      width: 80%;
+      margin: 0 auto;
+      box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    }
+    .row-item:hover { background: var(--island-2); }
+
+    @keyframes fadeUp { from { opacity:0; transform:translateY(26px); } to { opacity:1; transform:none; } }
+    @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+    @media (max-width:640px) {
+      body { padding: 12px 10px; }
+      .hero-island { grid-template-columns: 1fr; }
+      .hero-right  { min-height: 240px; border-radius: 0 0 var(--radius) var(--radius); }
+      .hero-left   { padding: 36px 24px; }
+    }
+
+        /* CHATBOT */
+    #chatbot-widget {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      z-index: 10000;
+      font-family: 'Syne', sans-serif;
+    }
+
+    #chatbot-toggle {
+      background: var(--ink);
+      color: #fff;
+      border: none;
+      border-radius: 16px;
+      padding: 14px 20px;
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: 0 10px 30px rgba(0,0,0,.18);
+      cursor: none;
+    }
+
+    #chatbot-box {
+      width: 360px;
+      max-width: calc(100vw - 24px);
+      height: 520px;
+      background: var(--island-bg);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      box-shadow: 0 16px 50px rgba(0,0,0,.18);
+      overflow: hidden;
+      display: none;
+      flex-direction: column;
+      margin-top: 12px;
+    }
+
+    #chatbot-box.open {
+      display: flex;
+    }
+
+    #chatbot-header {
+      background: var(--ink);
+      color: #fff;
+      padding: 18px 18px 14px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    #chatbot-header p {
+      margin-top: 4px;
+      font-size: 12px;
+      opacity: .8;
+    }
+
+    #chatbot-close {
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 24px;
+      line-height: 1;
+      cursor: none;
+    }
+
+    #chatbot-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: #f3efe7;
+    }
+
+    .bot-msg,
+    .user-msg {
+      max-width: 85%;
+      padding: 12px 14px;
+      border-radius: 16px;
+      font-size: 14px;
+      line-height: 1.55;
+      word-wrap: break-word;
+    }
+
+    .bot-msg {
+      align-self: flex-start;
+      background: #e3ded3;
+      color: var(--ink);
+    }
+
+    .user-msg {
+      align-self: flex-end;
+      background: var(--ink);
+      color: #fff;
+    }
+
+    .chat-suggestions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .chat-suggestions button {
+      border: 1px solid rgba(0,0,0,.08);
+      background: #fff;
+      color: var(--ink);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: none;
+    }
+
+    #chatbot-form {
+      display: flex;
+      gap: 10px;
+      padding: 14px;
+      border-top: 1px solid rgba(0,0,0,.08);
+      background: var(--island-bg);
+    }
+
+    #chatbot-input {
+      flex: 1;
+      border: 1px solid rgba(0,0,0,.1);
+      background: #fff;
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-size: 14px;
+      outline: none;
+      font-family: 'Syne', sans-serif;
+    }
+
+    #chatbot-form button {
+      border: none;
+      background: var(--ink);
+      color: #fff;
+      border-radius: 14px;
+      padding: 0 16px;
+      font-weight: 700;
+      cursor: none;
+      font-family: 'Syne', sans-serif;
+    }
+
+    .chat-link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+      background: var(--ink);
+      color: #fff;
+      text-decoration: none;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    @media (max-width: 640px) {
+      #chatbot-widget {
+        right: 12px;
+        bottom: 12px;
+      }
+
+      #chatbot-box {
+        width: min(360px, calc(100vw - 24px));
+        height: 70vh;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="cur-dot" id="dot"></div>
+  <div class="cur-ring" id="ring"></div>
+
+  <!-- PAGE 1 - Home -->
+  <section id="home" style="min-height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; padding:24px 16px; gap:12px;">
+    <div class="section-wrap">
+
+      <div class="menu-wrap">
+        <div class="menu-btn-row">
+          <div class="menu-links-expand">
+            <a href="#" onclick="goTo('home')">Home</a>
+            <a href="#" onclick="goTo('recentworks')">Recent Works</a>
+          </div>
+          <button class="menu-toggle">Click Here! ≡</button>
+        </div>
+      </div>
+
+      <div class="island hero-island">
+        <div class="hero-left">
+          <p class="hero-intro">Muhammad Bintang Setya</p>
+          <h1 class="hero-h1">A Mechanical Engineer &amp; part-time Developer</h1>
+          <p class="hero-sub">I am Muhammad Bintang Setya, a Mechanical Engineering Master's student at Aalto University, majoring in Solid Mechanics. With a technical background in 3D Modelling and Additive Manufacturing. I am a good problem-solver, good communicator, and quick learner. I have a strong interest in and hands-on experience with 3D CAD design and modelling, as well as in assessing structural strength through engineering calculations and simulations.</p>
+          <a href="#chatbot-widget" onclick="event.preventDefault(); openChatbot()" class="hero-cta">
+            How can I assist you? <span class="hero-cta-icon">→</span>
+          </a>
+        </div>
+        <div class="hero-right">
+          <div class="hero-photo-wrap">
+            <img src="pas_foto.jpg" alt="Muhammad Bintang Setya" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE 2 - Recent Works -->
+  <section id="recentworks" style="min-height:100vh; display:none; flex-direction:column; justify-content:center; align-items:center; padding:24px 16px; gap:28px; width:100%; height: auto;">
+    <div class="section-wrap">
+
+      <div class="menu-wrap">
+        <div class="menu-btn-row">
+          <div class="menu-links-expand">
+            <a href="#" onclick="goTo('home')">Home</a>
+            <a href="#" onclick="goTo('recentworks')">Recent Works</a>
+          </div>
+          <button class="menu-toggle">Click Here! ≡</button>
+        </div>
+      </div>
+
+      <div class="row-item" onclick="goTo('research')" style="background-image:url('recent-works/research.png'); background-size:cover; background-position:center; position:relative; overflow:hidden;">
+        <div style="position:absolute; inset:0; background:rgba(233,229,220,0.75);"></div>
+        <span style="position:relative; z-index:1; color:var(--ink); font-weight:700;">Research</span>
+        <span style="position:relative; z-index:1;">📄</span>
+      </div>
+
+      <div class="row-item" onclick="goTo('works')" style="background-image:url('recent-works/works.png'); background-size:cover; background-position:center; position:relative; overflow:hidden;">
+        <div style="position:absolute; inset:0; background:rgba(233,229,220,0.75);"></div>
+        <span style="position:relative; z-index:1; color:var(--ink); font-weight:700;">Works</span>
+        <span style="position:relative; z-index:1;">💼</span>
+      </div>
+
+      <div class="row-item" onclick="goTo('projects')" style="background-image:url('recent-works/projects.png'); background-size:cover; background-position:center; position:relative; overflow:hidden;">
+        <div style="position:absolute; inset:0; background:rgba(233,229,220,0.75);"></div>
+        <span style="position:relative; z-index:1; color:var(--ink); font-weight:700;">Projects</span>
+        <span style="position:relative; z-index:1;">⚙️</span>
+      </div>
+
+      <div class="row-item" onclick="goTo('mini-projects')" style="background-image:url('recent-works/mini-projects.png'); background-size:cover; background-position:center; position:relative; overflow:hidden;">
+        <div style="position:absolute; inset:0; background:rgba(233,229,220,0.75);"></div>
+        <span style="position:relative; z-index:1; color:var(--ink); font-weight:700;">Other Projects</span>
+        <span style="position:relative; z-index:1;">🛠️</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PAGE 3 - Research -->
+  <section id="research" style="min-height:100vh; display:none; flex-direction:column; justify-content:center; align-items:center; padding:24px 16px; gap:12px;">
+    <div class="menu-wrap">
+      <div class="menu-btn-row">
+        <div class="menu-links-expand">
+          <a href="#" onclick="goTo('home')">Home</a>
+          <a href="#" onclick="goTo('recentworks')">Recent Works</a>
+        </div>
+        <button class="menu-toggle">Click Here! ≡</button>
+      </div>
+    </div>
+
+    <div class="section-wrap" style="max-width:1400px;gap: 18px;">
+
+      <div style="position:relative; width:100%; height:480px; aspect-ratio:5/4; display:flex; align-items:center; justify-content:center;">
+        <div id="carousel-research" style="display:flex; gap:16px; align-items:center; justify-content:center; width:100%; height:100%; transition:transform .4s ease;"></div>
+        <button onclick="slideCard('research',-1)" style="position:absolute; left:0; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.8); border:none; border-radius:50%; width:40px; height:40px; font-size:18px; cursor:none; display:grid; place-items:center; z-index:10;">‹</button>
+        <button onclick="slideCard('research',1)" style="position:absolute; right:0; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.8); border:none; border-radius:50%; width:40px; height:40px; font-size:18px; cursor:none; display:grid; place-items:center; z-index:10;">›</button>
+      </div>
+
+      <div style="display:grid; grid-template-columns:0.5fr 1.5fr; gap:24px; padding:8px 4px;margin-bottom: 10%;">
+        <div style="display:flex; flex-direction:column; justify-content:flex-end; gap:18px;">
+          <a href="https://drive.google.com/file/d/1WZZsf5kHgEr4s5SR2I4xeSLO8LSluqKF/view?usp=sharing" style="display:flex; align-items:center; justify-content:space-between; width:60%; padding:8px 16px; background: var(--ink); color: #ffffff; text-decoration:none; border-radius:22px; font-size:18px; font-weight:700; margin-bottom:10%;">
+            <span>Read more</span>
+            <span style="font-size:22px; line-height:1;">↗</span>
+          </a>
+          <span style="font-size:12px; color:var(--muted); font-weight:500;">Bachelor's Thesis · Universitas Indonesia</span>
+          <a href="#recentworks" onclick="event.preventDefault(); goTo('recentworks')" style="font-size:14px; font-weight:700; color:var(--ink); text-decoration:underline; cursor:none;">← Back to Recent Works</a>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:10px; width:100%;">
+          <div>
+            <h2 style="font-family:'Playfair Display',serif; font-size:32px; font-weight:700; line-height:1.1;">Research</h2>
+            <p style="font-size:18px; color:var(--muted); margin-top:2px;">Influence of Fastener Flexibility on Riveted Double Shear Metal Joint on N219 Lower Skin</p>
+          </div>
+          <p style="font-size:14px; line-height:1.75; color:var(--ink); text-align:justify;">
+            Stress has a major impact on an aircraft's fatigue life during design. Stress concentration measures a place where local stress is much higher than surrounding stress (Kt). In riveted double shear metal joint structures, the maximum local stress is influenced by two factors, bearing stress from the fastener's load distribution and bypass stress from the fastener's residual load. This distribution load is impacted by fastener flexibility, which measures stiffness using methods by Tate and Rosenfeld or Huth. The maximum local stress calculation difference between both methods is 2.81%. Using MSC Patran and MSC Nastran software, distribution load up to the maximum local stress in each area may be calculated and visualized using two different FEM model, 1D Bush Element and FEM model using hole resulting highest value 3.89%. While compared to analytical method the highest maximum difference is 14.48%. Furthermore, stress concentrations influence the stress intensity factor (K), a measure of stress at a crack's tip, proportional to crack growth rate. Determining the stress intensity factor (K) on the riveted double shear metal joint structures are considering two factors, stress spectrum and geometry correction factor. The stress intensity factor (K) is able calculated and analyzed using crack software analysis or the energy release method, which provides a similar pattern.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PAGE 4 - Works -->
+  <section id="works" style="display:none; flex-direction:column; justify-content:flex-start; align-items:center; padding:48px 16px; gap:12px;">
+    <div class="menu-wrap">
+      <div class="menu-btn-row">
+        <div class="menu-links-expand">
+          <a href="#" onclick="goTo('home')">Home</a>
+          <a href="#" onclick="goTo('recentworks')">Recent Works</a>
+        </div>
+        <button class="menu-toggle">Click Here! ≡</button>
+      </div>
+    </div>
+
+    <div class="section-wrap" style="max-width:1400px; gap:18px; margin-bottom:0;">
+
+      <!-- BRI -->
+      <div style="position:relative; width:100%; height:480px; aspect-ratio:5/4; display:flex; align-items:center; justify-content:center;">
+        <div id="carousel-bri" style="display:flex; gap:16px; align-items:center; justify-content:center; width:100%; height:100%; transition:transform .4s ease;"></div>
+        <button onclick="slideCard('bri',-1)" style="position:absolute; left:0; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.8); border:none; border-radius:50%; width:40px; height:40px; font-size:18px; cursor:none; display:grid; place-items:center; z-index:10;">‹</button>
+        <button onclick="slideCard('bri',1)" style="position:absolute; right:0; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.8); border:none; border-radius:50%; width:40px; height:40px; font-size:18px; cursor:none; display:grid; place-items:center; z-index:10;">›</button>
+      </div>
+
+      <div style="display:grid; grid-template-columns:0.5fr 1.5fr; gap:24px; padding:8px 4px; margin-bottom:0;">
+        <div style="display:flex; flex-direction:column; justify-content:flex-end; gap:18px;">
+          <a href="https://bitcorp.id/" style="font-size:12px; color:var(--muted); font-weight:500;">
+            <span>Operation Managed Services Internship Staff <br> PT. Bringin Inti Teknologi: bit.</span> 
+          <a href="https://drive.google.com/drive/u/0/folders/1HLDEZDgjvnZR9AIPbbMw5vpyudcR072d" style="display:flex; align-items:center; justify-content:space-between; width:60%; padding:8px 16px; background:var(--ink); color:#ffffff; text-decoration:none; border-radius:22px; font-size:18px; font-weight:700;">
+            <span>Read more</span>
+            <span style="font-size:22px; line-height:1;">↗</span>
+          </a>
+          </div>
+        <div style="display:flex; flex-direction:column; gap:18px; width:100%;">
+          <div>
+            <h2 style="font-family:'Nunito',serif; font-size:clamp(28px,3vw,48px); font-weight:700; line-height:1.15; color:var(--ink); text-shadow: 1px 1px 0 #a8a49c, 2px 2px 0 #a8a49c, 3px 3px 0 #a8a49c, 4px 4px 0 #a8a49c, 5px 5px 0 #a8a49c, 6px 6px 8px rgba(0,0,0,0.3);">Why Send Teams to Inspect If a Drone Can Inspect First?</h2>
+          </div>
+          <p style="font-size:14px; line-height:1.75; color:var(--ink); text-align:justify;">
+            Bank Rakyat Indonesia (BRI), a state-owned bank in Indonesia, requires On-the-Spot (OTS) certification for mortgage housing to verify physical property conditions before approval. 
+            The process relies heavily on field officers and regional managers to conduct direct inspections for mortgage applications, which can be time-consuming, labor-intensive, and inefficient, especially in rural or remote areas.
+            To address this challenge, my team and I developed an unmanned aerial vehicle (UAV) designed to streamline field inspections by reducing reliance on field officers and regional managers. 
+            The workflow reduces on the need for field officers and regional managers by combining UAV-based physical inspections with document verification using the HOMESPOT digital platform. 
+            During the operation, the autonomous UAV automatically capture data like building models, site maps, and structural layouts, then send it to the system for AI analysis by transmitting from the drone to BRINet via onboard process in NVIDIA Jetson Nano.<br></br>
+            The UAV was custom-built VTOL and Fixed Wing Frame to support both vertical take-off and improve long flight efficiency. The UAV relies on 4 SunnySky X4112S KV450 brushless DC motor combined with a 15-inch propellers to support around 8 kg of payload including the UAV frame. The battery pack was assembled using TATTU G-TECH 22.2V 6S 10000mAh 25C Lipo Battery cells that allows the drone to fly for up to 90 minutes. An onboard NVIDIA Jetson Nano processes image data collected from the camera, supporting real-time data handling during inspection missions.<br></br>
+            The UAV also features with Pixhawk Cube as the drone's autopilot flight controller and the central component of the telemetry system, Here 3 GPS Module, and FrSky telemetry radio operating at 433 MHz. In addition, the UAV is capable to flight up to 50 km making it suitable for long-range inspection in rural areas, and the drone is also designed to be compact and easy to operate by field officers with minimal training.
+          </p>
+        </div>
+      </div>
+
+      <!-- PTDI -->
+      <div style="position:relative; width:100%; height:480px; aspect-ratio:5/4; display:flex; align-items:center; justify-content:center; margin-top:48px;">
+        <div id="carousel-ptdi" style="display:flex; gap:16px; align-items:center; justify-content:center; width:100%; height:100%; transition:transform .4s ease;"></div>
+        <button onclick="slideCard('ptdi',-1)" style="position:absolute; left:0; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.8); border:none; border-radius:50%; width:40px; height:40px; font-size:18px; cursor:none; display:grid; place-items:center; z-index:10;">‹</button>
+        <button onclick="slideCard('ptdi',1)" style="position:absolute; right:0; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.8); border:none; border-radius:50%; width:40px; height:40px; font-size:18px; cursor:none; display:grid; place-items:center; z-index:10;">›</button>
+      </div>
+
+      <div style="display:grid; grid-template-columns:0.5fr 1.5fr; gap:24px; padding:8px 4px; margin-bottom:0;">
+        <div style="display:flex; flex-direction:column; justify-content:flex-end; gap:18px;">
+          <a href="https://www.indonesian-aerospace.com/en/" style="font-size:12px; color:var(--muted); font-weight:500;">
+            <span>Fatigue and Fracture Mechanics Interns <br> PT. Dirgantara Indonesia</span>
+          <a href="https://drive.google.com/file/d/1f9RJpblpEAP5oWoDW77o4pd96h2c4KSa/view?usp=sharing" style="display:flex; align-items:center; justify-content:space-between; width:60%; padding:8px 16px; background:var(--ink); color:#ffffff; text-decoration:none; border-radius:22px; font-size:18px; font-weight:700;">
+            <span>Read more</span>
+            <span style="font-size:22px; line-height:1;">↗</span>
+          </a>
+          <a href="#recentworks" onclick="event.preventDefault(); goTo('recentworks')" style="font-size:14px; font-weight:700; color:var(--ink); text-decoration:underline; cursor:none;">← Back to Recent Works</a>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:18px; width:100%;">
+          <div>
+            <h2 style="font-family:'Nunito',serif; font-size:clamp(28px,3vw,48px); font-weight:700; line-height:1.15; color:var(--ink); text-shadow: 1px 1px 0 #a8a49c, 2px 2px 0 #a8a49c, 3px 3px 0 #a8a49c, 4px 4px 0 #a8a49c, 5px 5px 0 #a8a49c, 6px 6px 8px rgba(0,0,0,0.3);">How can FEM analysis assist in identifying Fatigue-Critical Areas in Aircraft Structures?</h2>
+          </div>
+          <p style="font-size:14px; line-height:1.75; color:var(--ink); text-align:justify;">
+            Stress has a big effect on how long an aeroplane can last during design. 
+            To ensure sure flights are safe and reliable, the structural integrity of aircraft parts is very important. 
+            In wing box structures, riveted spar and skin joints are very important because they are under a lot of stress and may experience stress concentration that can cause cracks to initiate and propagate over time.
+            A detailed stress and fatigue analysis is required to assist with the structural evaluation and maintenance planning of the N219 aircraft. 
+            Therefore, the analysis utilised a two-dimensional finite element method (2D FEM) with MSC Nastran to assess the stress distribution of the N219 wing box components. 
+            <br></br>
+            The analysis was mainly concerned with identifying a stress concentration in riveted joints that might indicate the initiation and propagation of cracks. 
+            Based on the results of the stress analysis, the crack growth rates and fatigue cycles were also calculated to determine the lifespan of the components. 
+            The analysis results were used to help determine intervals for maintenance and inspections and to support the evaluation of structural durability. 
+            This work managed to evaluate the safety and reliability of aircraft structures by using simulation-based engineering analysis.
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PAGE 5 - Projects -->
+  <section id="projects" style="min-height:100vh; display:none; flex-direction:column; justify-content:center; align-items:center; padding:24px 16px; gap:12px; height:auto;">
+    <div class="menu-wrap">
+      <div class="menu-btn-row">
+        <div class="menu-links-expand">
+          <a href="#home" onclick="event.preventDefault(); goTo('home')">Home</a>
+          <a href="#recentworks" onclick="event.preventDefault(); goTo('recentworks')">Recent Works</a>
+        </div>
+        <button class="menu-toggle">Click Here! ≡</button>
+      </div>
+    </div>
+
+    <div class="section-wrap" style="max-width:1400px;">
+
+      <!-- PROJECT 1 - Monterro -->
+      <div style="position:relative; width:100%; height:480px; aspect-ratio:5/4; display:flex; align-items:center; justify-content:center;">
+        <div id="carousel-monterro" style="display:flex; gap:16px; align-items:center; justify-content:center; width:100%; height:100%; transition:transform .4s ease;"></div>
+        <button onclick="slideCard('monterro',-1)" style="position:absolute; left:0; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.8); border:none; border-radius:50%; width:40px; height:40px; font-size:18px; cursor:none; display:grid; place-items:center; z-index:10;">‹</button>
+        <button onclick="slideCard('monterro',1)" style="position:absolute; right:0; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.8); border:none; border-radius:50%; width:40px; height:40px; font-size:18px; cursor:none; display:grid; place-items:center; z-index:10;">›</button>
+      </div>
+
+      <div style="display:grid; grid-template-columns:0.5fr 1.5fr; gap:24px; padding:8px 4px;">
+        <div style="display:flex; flex-direction:column; justify-content:flex-end; gap:18px;">
+          <span style="font-size:12px; color:var(--muted); font-weight:500;">Embedded System · Aalto University</span>
+          <a href="https://github.com/MBintang-03/Monterro.git" style="display:flex; align-items:center; justify-content:space-between; width:60%; padding:8px 16px; background:var(--island-bg); color:var(--ink); text-decoration:none; border-radius:22px; font-size:18px; font-weight:700; margin-bottom:10%;">
+            <span>Read more</span>
+            <span style="font-size:22px; line-height:1;">↗</span>
+          </a>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:10px; width:100%;">
+          <div>
+            <h2 style="font-family:'Nunito',sans-serif; font-size:clamp(14px,3vw,28px); font-weight:900; line-height:1.15; color:var(--ink); text-shadow: 1px 1px 0 #a8a49c, 2px 2px 0 #a8a49c, 3px 3px 0 #a8a49c, 4px 4px 0 #a8a49c, 5px 5px 0 #a8a49c, 6px 6px 8px rgba(0,0,0,0.3);">No Hiking Buddy? Turn Your ESP32 Watch Into One</h2>
+            <p style="font-size:20px; color:var(--muted); margin-top:2px;">Monterro: Hiking Tour Assistant Powered by ESP32 LilyGo T-Watch</p>
+          </div>
+          <p style="font-size:14px; line-height:1.75; color:var(--ink); text-align:justify;">
+            Monterro is a hiking tour assistant built around the LilyGo T-Watch 2020 V2. It tracks your steps, distance, duration, and calories in real time directly on your wrist, then synchronises the data to a Raspberry Pi over Bluetooth or WiFi. A live web dashboard displays everything as you hike. The project was developed as part of the ELEC-E8408 Embedded Systems Development group project at Aalto University, commissioned in the context of a Helsinki City Council brief for Finnish hiking tourism.
+          </p>
+        </div>
+      </div>
+
+      <!-- PROJECT 2 - Bit-O -->
+      <div style="position:relative; width:100%; height:480px; aspect-ratio:5/4; display:flex; align-items:center; justify-content:center; margin-top:48px;">
+        <div id="carousel-bit-o" style="display:flex; gap:16px; align-items:center; justify-content:center; width:100%; height:100%; transition:transform .4s ease;"></div>
+        <button onclick="slideCard('bit-o',-1)" style="position:absolute; left:0; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.8); border:none; border-radius:50%; width:40px; height:40px; font-size:18px; cursor:none; display:grid; place-items:center; z-index:10;">‹</button>
+        <button onclick="slideCard('bit-o',1)" style="position:absolute; right:0; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.8); border:none; border-radius:50%; width:40px; height:40px; font-size:18px; cursor:none; display:grid; place-items:center; z-index:10;">›</button>
+      </div>
+
+      <div style="display:grid; grid-template-columns:0.5fr 1.5fr; gap:24px; padding:8px 4px;">
+        <div style="display:flex; flex-direction:column; justify-content:flex-end; gap:18px;">
+          <span style="font-size:12px; color:var(--muted); font-weight:500;">Startup Program · AaltoES Ignite</span>
+          <a href="https://feelbit-o.fi/" style="display:flex; align-items:center; justify-content:space-between; width:60%; padding:8px 16px; background:var(--island-bg); color:var(--ink); text-decoration:none; border-radius:22px; font-size:18px; font-weight:700; margin-bottom:10%;">
+            <span>Read more</span>
+            <span style="font-size:22px; line-height:1;">↗</span>
+          </a>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:10px; width:100%;">
+          <div>
+            <h2 style="font-family:'Nunito',sans-serif; font-size:clamp(14px,3vw,28px); font-weight:900; line-height:1.15; color:var(--ink); text-shadow: 1px 1px 0 #a8a49c, 2px 2px 0 #a8a49c, 3px 3px 0 #a8a49c, 4px 4px 0 #a8a49c, 5px 5px 0 #a8a49c, 6px 6px 8px rgba(0,0,0,0.3);">What If Period Pain Could Be Relieved Without Pills?</h2>
+            <p style="font-size:20px; color:var(--muted); margin-top:2px;">Bit-o: A wearable Menstrual Cramp Reliever Health Device</p>
+          </div>
+          <p style="font-size:14px; line-height:1.75; color:var(--ink); text-align:justify;">
+            Bit-o was designed as a portable Transcutaneous Electrical Nerve Stimulation (TENS) device to help relieve menstrual cramps without the use of medication or surgery. Studies show that approximately 80% of women experience menstrual pain at some point in their lives, with 5% to 10% suffering pain severe enough to disrupt daily activities. This pain can lead to decreased productivity, with research indicating that 38% of women are unable to perform regular daily activities during their menstrual period. Despite its prevalence, menstrual pain is often underreported and inadequately addressed, highlighting the need for effective solutions to alleviate this widespread problem.<br></br>
+            The prototype was made to be small, easy to use, and able to be used by the same person multiple times. The Arduino Nano microcontroller controls the intensity and frequency of the TENS signal, and a rotary potentiometer allows users adjust these settings to make them more comfortable. Electrodes on the skin provide the TENS signal to the area which hurts to help relieve menstrual pain. The device runs on a rechargeable lithium-ion battery, which makes it easy to carry and use.<br></br>
+            The project was developed under AaltoES Ignite 2025 program, and successfully reached the final round of the program and presented at Demo Day. Future development of the project will be focused on improving the compactness, expanding user testing of the product, and refining the design before starting to look for funding and manufacturing partners to release the product into the market.
+          </p>
+        </div>
+      </div>
+
+      <!-- PROJECT 3 - PdP -->
+      <div style="position:relative; width:100%; height:480px; aspect-ratio:5/4; display:flex; align-items:center; justify-content:center; margin-top:48px;">
+        <div id="carousel-PdP" style="display:flex; gap:16px; align-items:center; justify-content:center; width:100%; height:100%; transition:transform .4s ease;"></div>
+        <button onclick="slideCard('PdP',-1)" style="position:absolute; left:0; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.8); border:none; border-radius:50%; width:40px; height:40px; font-size:18px; cursor:none; display:grid; place-items:center; z-index:10;">‹</button>
+        <button onclick="slideCard('PdP',1)" style="position:absolute; right:0; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.8); border:none; border-radius:50%; width:40px; height:40px; font-size:18px; cursor:none; display:grid; place-items:center; z-index:10;">›</button>
+      </div>
+
+      <div style="display:grid; grid-template-columns:0.5fr 1.5fr; gap:24px; padding:8px 4px;">
+        <div style="display:flex; flex-direction:column; justify-content:flex-end; gap:18px;">
+          <span style="font-size:12px; color:var(--muted); font-weight:500;">Product Development Project Course · Aalto University</span>
+          <a href=https://drive.google.com/file/d/14ED_3R_-gBNDfL7JgKu0M3vp0Rc-xoLm/view?usp=sharing style="display:flex; align-items:center; justify-content:space-between; width:60%; padding:8px 16px; background:var(--island-bg); color:var(--ink); text-decoration:none; border-radius:22px; font-size:18px; font-weight:700; margin-bottom:10%;">
+            <span>Read more</span>
+            <span style="font-size:22px; line-height:1;">↗</span>
+          </a>
+          <a href="#recentworks" onclick="event.preventDefault(); goTo('recentworks')" style="font-size:14px; font-weight:700; color:var(--ink); text-decoration:underline; cursor:none;">← Back to Recent Works</a>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:10px; width:100%;">
+          <div>
+            <h2 style="font-family:'Nunito',sans-serif; font-size:clamp(14px,3vw,28px); font-weight:900; line-height:1.15; color:var(--ink); text-shadow: 1px 1px 0 #a8a49c, 2px 2px 0 #a8a49c, 3px 3px 0 #a8a49c, 4px 4px 0 #a8a49c, 5px 5px 0 #a8a49c, 6px 6px 8px rgba(0,0,0,0.3);">What If Mine Detection Didn't Risk Human Lives First?</h2>
+            <p style="font-size:20px; color:var(--muted); margin-top:2px;">DOLYA: Mine-detecting drone</p>
+          </div>
+          <p style="font-size:14px; line-height:1.75; color:var(--ink); text-align:justify;">
+            Dolya was designed to create a Automated system for detecting buried landmines to reduce direct pyshical involvement during demining operations. According to the UNDP, one of the active warzone country, Ukraine is the most mine-polluted country in the world, with over 23% of its territory contaminated by deadly explosives. Since, the beginning of the conflict, the casualties are 1158 civilians and soldiers, with half of them killed by landmines.<br></br>
+            Collaborating with SAAB, UAV-based system that aerially maps suspected landmine sites using thermal imaging and RGB camera was designed to mitigate this hazard. Using UAV allows for faster and more accurate mine detection compared to traditional manual methods, using metal detectors which tends to result in a significant amount of false positives in war-affected areas covered in metal scrap.<br></br>
+            Dolya features with a custom-built carbon fiber hexacopter relies on T-Motor MN5006 300KV brushless DC motor combined with a 18-inch propellers to support around 8 kg of payload including the UAV frame. The battery pack was manually assembled using Samsung 21700 4500mAh cells that allows the drone to fly for around 40 minutes, while the onboard NVIDIA Jetson Nano processes the thermal and RGB data in real time to identify potential landmine locations. The UAV also features with Pixhawk 6x as the drone's autopilot flight controller and the central component of the telemetry system, M10 GPS Module, and SiK telemetry radio operating at 433 MHz.<br></br>
+            For the detection module, it features four 12MP IMX477R RGB-cameras oriented 90 degrees apart and pointing towards the ground at a 45-degree angle, providing a wide field of view of approximately 5-by-5 meters and a thermal camera pointing straight down to detect heat of buried landmines. It is also supported by NVIDIA Jetson Orin NX 16GB that processes the data from the cameras in real time using a custom-trained YOLOv8 model to identify potential landmine locations.<br></br>
+            The prototype demonstrates the feasibility of constructing a functional mine-detecting drone without the requirement of professional knowledge by successfully detect PFM1 and 9N235 mines and can be adapted to new explosives. For future improvements, the expansion of dataset needed to improve accuracy of the detection model and to make the model still updated with the latest landmine types is needed, as well as the improvement of the drone's frame by making it more compact and water-resistant.
+          </p>
+          <a href="#mini-projects" onclick="event.preventDefault(); goTo('mini-projects')" style="display:flex; align-items:center; justify-content:space-between; width:40%; padding:8px 16px; background:var(--island-bg); color:var(--ink); text-decoration:none; border-radius:22px; font-size:18px; font-weight:700; margin:24px auto 0;">
+            <span>Interest in my other mini-projects? <br> Click here!</span>
+            <span style="font-size:22px; line-height:1;">↓</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PAGE 5 - Mini-Projects -->
+  <section id="mini-projects" style="min-height:100vh; display:none; flex-direction:column; justify-content:center; align-items:center; padding:24px 16px; gap:12px; height:auto;">
+    <div class="menu-wrap">
+      <div class="menu-btn-row">
+        <div class="menu-links-expand">
+          <a href="#home" onclick="event.preventDefault(); goTo('home')">Home</a>
+          <a href="#recentworks" onclick="event.preventDefault(); goTo('recentworks')">Recent Works</a>
+        </div>
+        <button class="menu-toggle">Click Here! ≡</button>
+      </div>
+    </div>
+
+    <div class="section-wrap" style="max-width:1400px; gap:24px;">
+
+      <!-- MINI CARD 1 -->
+      <div style="position:relative; width:100%; border-radius:32px; overflow:hidden; min-height:420px; background:var(--island-2);">
+        <div style="position:absolute; inset:0; background-image:url('mini-projects/milling.png'); background-size:cover; background-position:center; opacity:0.25;"></div>
+        <video autoplay muted loop playsinline style="position:absolute; right:48px; top:50%; transform:translateY(-50%); width:38%; height:78%; object-fit:cover; border-radius:24px; z-index:1;">
+          <source src="mini-projects/plummerblock.mp4" type="video/mp4">
+        </video>
+        <div style="position:relative; z-index:2; padding:56px 48px; max-width:52%; display:flex; flex-direction:column; gap:20px;">
+          <h2 style="font-family:'Nunito',serif; font-size:clamp(28px,3vw,48px); font-weight:700; line-height:1.15; color:var(--ink); text-shadow: 1px 1px 0 #a8a49c, 2px 2px 0 #a8a49c, 3px 3px 0 #a8a49c, 4px 4px 0 #a8a49c, 5px 5px 0 #a8a49c, 6px 6px 8px rgba(0,0,0,0.3);">From CAD to CAM: Simulating a Part in Creo</h2>
+          <p style="font-size:16px; line-height:1.75; color:var(--ink); text-align:justify; font-weight:400;">
+            During my first semester in Aalto University, I enrolled in Selection of Materials and Manufacturing Processes course and embarked on designing a final assignment focused on creating 2 Bolt Pillar bearing SL series Plummer Block. This project involved creating 3D models and performing the machining process for tool path using a CAM simulation of the Plummer block.
+          </p>
+          <div style="display:flex; align-items:center; gap:16px; margin-top:8px;">
+            <a href="https://grabcad.com/library/simple-plummer-block-1" style="display:flex; align-items:center; justify-content:space-between; width:260px; padding:18px 28px; background:var(--island-bg); color:var(--ink); text-decoration:none; border-radius:18px; font-size:16px; font-weight:700;">
+              <span>Check it out!</span>
+              <span style="font-size:20px;">→</span>
+            </a>
+            <div style="z-index:2; width:120px; height:80px; background:var(--island-bg); border-radius:16px; display:flex; align-items:center; justify-content:center; opacity:0.9;">
+              <img src="mini-projects/PTC_Creo_logo.png" style="height:32px; width:auto; object-fit:contain;"/>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MINI CARD 2 -->
+      <div style="position:relative; width:100%; border-radius:32px; overflow:hidden; min-height:420px; background:var(--island-2);">
+        <div style="position:absolute; inset:0; background-image:url('mini-projects/rock-crusher.png'); background-size:cover; background-position:center; opacity:0.25;"></div>
+        <video autoplay muted loop playsinline style="position:absolute; right:48px; top:40%; transform:translateY(-50%); width:38%; height:58%; object-fit:cover; border-radius:48px; z-index:1;">
+          <source src="mini-projects/rockcrusher.mp4" type="video/mp4">
+        </video>
+        <div style="position:relative; z-index:2; padding:56px 48px; max-width:55%; display:flex; flex-direction:column; gap:20px; height:100%;">
+          <h2 style="font-family:'Nunito',serif; font-size:clamp(28px,3vw,48px); font-weight:700; line-height:1.15; color:var(--ink); text-shadow: 1px 1px 0 #a8a49c, 2px 2px 0 #a8a49c, 3px 3px 0 #a8a49c, 4px 4px 0 #a8a49c, 5px 5px 0 #a8a49c, 6px 6px 8px rgba(0,0,0,0.3);">What It Takes to Engineer a 100 kN Rock Crusher?</h2>
+          <p style="font-size:16px; line-height:1.75; color:var(--ink); text-align:justify; font-weight:400;">
+            During my first semester in Universitas Indonesia, I enrolled in Computer-Aided Design course and embarked on designing a final assignment with my group focused on creating rock crusher mechanism that able to withstand around 10 ton or 100 kN. This project involved creating 3D models, analyzing kinematic and dynamic motion simulations, and analyzing stress distributions to do geometric optimization for the final design. The mechanism combined 10KW Wheel Motor Needle Bearing Structure Hydraulic Motor with Pre-drilled Flange Holes Hydraulic Wheel Motor for Ships Hoists that has output torque around 330 Nm with a 5:1 WITTENSTEIN alpha SPC+ Planetary Gearbox creating torque up to 1936 Nm, which is required to crush rocks with 100 kN of force.
+          </p>
+          <div style="display:flex; align-items:center; gap:16px; margin-top:8px;">
+            <a href="https://grabcad.com/library/stone-crusher-mechanism-2" style="display:flex; align-items:center; justify-content:space-between; width:260px; padding:18px 28px; background:var(--island-bg); color:var(--ink); text-decoration:none; border-radius:18px; font-size:16px; font-weight:700;">
+              <span>Check it out!</span>
+              <span style="font-size:20px;">→</span>
+            </a>
+            <div style="z-index:2; width:120px; height:80px; background:var(--island-bg); border-radius:16px; display:flex; align-items:center; justify-content:center; opacity:0.9;">
+              <img src="mini-projects/nx.jpg" style="height:auto; width:60%; object-fit:contain;"/>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MINI CARD 3 -->
+      <div style="position:relative; width:100%; border-radius:32px; overflow:hidden; min-height:420px; background:var(--island-2);">
+        <div style="position:absolute; inset:0; background-image:url('mini-projects/F1.png'); background-size:cover; background-position:center; opacity:0.25;"></div>
+        <video autoplay muted loop playsinline style="position:absolute; right:48px; top:40%; transform:translateY(-50%); width:38%; height:55%; object-fit:cover; border-radius:48px; z-index:1;">
+          <source src="mini-projects/DRS.mp4" type="video/mp4">
+        </video>
+        <div style="position:relative; z-index:2; padding:56px 48px; max-width:55%; display:flex; flex-direction:column; gap:20px; height:100%;">
+          <h2 style="font-family:'Nunito',serif; font-size:clamp(28px,3vw,48px); font-weight:700; line-height:1.15; color:var(--ink); text-shadow: 1px 1px 0 #a8a49c, 2px 2px 0 #a8a49c, 3px 3px 0 #a8a49c, 4px 4px 0 #a8a49c, 5px 5px 0 #a8a49c, 6px 6px 8px rgba(0,0,0,0.3);">What If Formula Student Had a Custom Pneumatic DRS?</h2>
+          <p style="font-size:16px; line-height:1.75; color:var(--ink); text-align:justify; font-weight:400;">
+            During my last semester in Universitas Indonesia, I collaborated with Formula Student Team in Project Milestone course in designing DRS (Drag Reduction System) allows the rear wing of the Formula Student car to adjust its angle, reducing drag and increasing straight-line speed. 
+            The DRS system was designed to be pneumatically actuated, utilizing compressed air to swiftly and reliably adjust the 35N rear wing's angle within 0.4 seconds.
+          </p>
+          <div style="display:flex; align-items:center; gap:16px; margin-top:8px;">
+            <a href="https://drive.google.com/drive/folders/1PieE4ImTmiRFlPn6xv3-YRwHtVEi-SDT?usp=sharing" style="display:flex; align-items:center; justify-content:space-between; width:260px; padding:18px 28px; background:var(--island-bg); color:var(--ink); text-decoration:none; border-radius:18px; font-size:16px; font-weight:700;">
+              <span>Check it out!</span>
+              <span style="font-size:20px;">→</span>
+            </a>
+            <div style="z-index:2; width:120px; height:80px; background:var(--island-bg); border-radius:16px; display:flex; align-items:center; justify-content:center; opacity:0.9;">
+              <img src="mini-projects/autodesk_inventor.png" style="height:32px; width:auto; object-fit:contain;"/>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MINI CARD 4 -->
+      <div style="position:relative; width:100%; border-radius:32px; overflow:hidden; min-height:420px; background:var(--island-2);">
+        <div style="position:absolute; inset:0; background-image:url('mini-projects/uav.png'); background-size:cover; background-position:center; opacity:0.25;"></div>
+        <video autoplay muted loop playsinline style="position:absolute; right:48px; top:40%; transform:translateY(-50%); width:38%; height:auto; object-fit:cover; border-radius:48px; z-index:1;">
+          <source src="mini-projects/BRI_Drone_Project.mp4" type="video/mp4">
+        </video>
+        <div style="position:relative; z-index:2; padding:56px 48px; max-width:55%; display:flex; flex-direction:column; gap:20px; height:100%;">
+          <h2 style="font-family:'Nunito',serif; font-size:clamp(28px,3vw,48px); font-weight:700; line-height:1.15; color:var(--ink); text-shadow: 1px 1px 0 #a8a49c, 2px 2px 0 #a8a49c, 3px 3px 0 #a8a49c, 4px 4px 0 #a8a49c, 5px 5px 0 #a8a49c, 6px 6px 8px rgba(0,0,0,0.3);">Why Send Teams to Inspect If a Drone Can Inspect First?</h2>
+          <p style="font-size:16px; line-height:1.75; color:var(--ink); text-align:justify; font-weight:400;">
+          <div style="display:flex; align-items:center; gap:16px; margin-top:8px;">
+            <a href="#" style="display:flex; align-items:center; justify-content:space-between; width:260px; padding:18px 28px; background:var(--island-bg); color:var(--ink); text-decoration:none; border-radius:18px; font-size:16px; font-weight:700;">
+              <span>Check it out!</span>
+              <span style="font-size:20px;">→</span>
+            </a>
+            <div style="z-index:2; width:120px; height:80px; background:var(--island-bg); border-radius:16px; display:flex; align-items:center; justify-content:center; opacity:0.9;">
+              <img src="mini-projects/autodesk_inventor.png" style="height:32px; width:auto; object-fit:contain;"/>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a href="#recentworks" onclick="event.preventDefault(); goTo('recentworks')" style="font-size:14px; font-weight:700; color:var(--ink); text-decoration:underline; cursor:none;">← Back to Recent Works</a>
+    </div>
+  </section>
+
+   <!-- CHATBOT -->
+  <div id="chatbot-widget">
+    <button id="chatbot-toggle" aria-label="Open chatbot">
+      Chat
+    </button>
+
+    <div id="chatbot-box">
+      <div id="chatbot-header">
+        <div>
+          <strong>Portfolio Assistant</strong>
+          <p>Ask me about Muhammad's work</p>
+        </div>
+        <button id="chatbot-close" aria-label="Close chatbot">×</button>
+      </div>
+
+      <div id="chatbot-messages">
+        <div class="bot-msg">
+          Hi! I can help you explore this portfolio.<br><br>
+          Try asking:
+          <div class="chat-suggestions">
+            <button onclick="sendSuggestion('Tell me about Muhammad')">About</button>
+            <button onclick="sendSuggestion('Show me research')">Research</button>
+            <button onclick="sendSuggestion('Show me works')">Works</button>
+            <button onclick="sendSuggestion('Show me projects')">Projects</button>
+          </div>
+        </div>
+      </div>
+
+      <form id="chatbot-form">
+        <input
+          id="chatbot-input"
+          type="text"
+          placeholder="Type your message..."
+          autocomplete="off"
+        />
+        <button type="submit">Send</button>
+      </form>
+    </div>
+  </div>
+
+  
+
+<script>
+  const pages = ['home', 'recentworks', 'research', 'works', 'projects', 'mini-projects'];
+
+  const carouselData = {
+    research: [
+      { type: 'img', src: 'research/double_shear_structure.jpg' },
+      { type: 'img', src: 'research/bearing-stress.png' },
+      { type: 'img', src: 'research/n219.png' }
+    ],
+    bri: [
+      { type: 'video', src: 'works/BRI_Drone_Project.mp4' },
+      { type: 'img', src: 'works/bri.png' },
+    ],
+    ptdi: [
+      { type: 'img', src: 'works/ptdi1.png' },
+      { type: 'img', src: 'works/ptdi2.png' },
+      { type: 'img', src: 'works/ptdi3.png' }
+    ],
+    monterro: [
+      { type: 'video', src: 'projects/monterro_introduction.mp4' },
+      { type: 'img', src: 'projects/img2.jpg' },
+      { type: 'img', src: 'projects/img3.jpg' }
+    ],
+    "bit-o": [
+      { type: 'video', src: 'projects/bit-o_prototype.mp4' },
+      { type: 'video', src: 'projects/bit-o_3d.mp4' },
+      { type: 'video', src: 'projects/bit-o_html.mp4' },
+      { type: 'img', src: 'projects/bit-o_schematic.png' },
+      { type: 'img', src: 'projects/bit-o_3d_printing.png' },
+      { type: 'img', src: 'projects/bit-o_3d_printing_back.png' }
+    ],
+    "PdP": [
+      { type: 'video', src: 'projects/saab_intro.mp4' },
+      { type: 'img', src: 'projects/saab_drone.png' },
+      { type: 'img', src: 'projects/saab_drone_schematic.png' }
+    ]
+  };
+
+  const carouselIdx = {
+    research: 0,
+    monterro: 0,
+    bri: 0,
+    ptdi: 0,
+    "bit-o": 0,
+    "PdP": 0
+  };
+
+  function showPage(page) {
+    pages.forEach(id => {
+      const section = document.getElementById(id);
+      if (section) {
+        section.style.display = (id === page) ? 'flex' : 'none';
+      }
+    });
+
+    document.body.style.overflow =
+      (page === 'projects' || page === 'works' || page === 'mini-projects') ? 'auto' : 'hidden';
+
+    window.scrollTo(0, 0);
+
+    if (page === 'research') {
+      renderCarousel('research');
+    }
+
+    if (page === 'works') {
+      renderCarousel('bri');
+      renderCarousel('ptdi');
+    }
+
+    if (page === 'projects') {
+      renderCarousel('monterro');
+      renderCarousel('bit-o');
+      renderCarousel('PdP');
+    }
+  }
+
+  function goTo(page, push = true) {
+    showPage(page);
+    if (push) {
+      history.pushState({ page }, '', '#' + page);
+    }
+  }
+
+  function renderCarousel(id) {
+    const el = document.getElementById('carousel-' + id);
+    const items = carouselData[id];
+
+    if (!el || !items || !items.length) return;
+
+    const cur = carouselIdx[id] || 0;
+    el.innerHTML = '';
+
+    items.forEach((item, i) => {
+      const offset = i - cur;
+      const isCenter = offset === 0;
+      const isVisible = Math.abs(offset) <= 1;
+
+      if (!isVisible) return;
+
+      const card = document.createElement('div');
+      card.style.cssText = `
+        flex-shrink: 0;
+        width: ${isCenter ? '35%' : '30%'};
+        height: ${isCenter ? '85%' : '75%'};
+        border-radius: 24px;
+        overflow: hidden;
+        background: var(--island-2);
+        transition: all .4s ease;
+        opacity: ${isCenter ? '1' : '0.5'};
+        transform: scale(${isCenter ? '1' : '0.9'});
+      `;
+
+      if (item.type === 'video') {
+        const vid = document.createElement('video');
+        vid.src = item.src;
+        vid.autoplay = true;
+        vid.muted = true;
+        vid.loop = true;
+        vid.playsInline = true;
+        vid.style.cssText = 'width:100%; height:100%; object-fit:cover; display:block;';
+        card.appendChild(vid);
+      } else {
+        const img = document.createElement('img');
+        img.src = item.src;
+        img.style.cssText = 'width:100%; height:100%; object-fit:cover; display:block;';
+        img.onerror = () => {
+          img.style.display = 'none';
+          card.style.background = '#ccc8bc';
+        };
+        card.appendChild(img);
+      }
+
+      el.appendChild(card);
+    });
+  }
+
+  function slideCard(id, dir) {
+    if (!carouselData[id]) return;
+    const total = carouselData[id].length;
+    carouselIdx[id] = (carouselIdx[id] + dir + total) % total;
+    renderCarousel(id);
+  }
+
+  window.goTo = goTo;
+  window.slideCard = slideCard;
+
+  document.querySelectorAll('.menu-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const row = btn.closest('.menu-btn-row');
+      if (row) row.classList.toggle('open');
+    });
+  });
+
+  function openChatbot() {
+    chatbotBox.classList.add('open');
+    chatbotInput.focus();
+  }
+  const dot = document.getElementById('dot');
+  const ring = document.getElementById('ring');
+
+  if (dot && ring) {
+    document.addEventListener('mousemove', e => {
+      dot.style.left = e.clientX + 'px';
+      dot.style.top = e.clientY + 'px';
+      ring.style.left = e.clientX + 'px';
+      ring.style.top = e.clientY + 'px';
+    });
+
+    document.addEventListener('mouseover', e => {
+      if (e.target.closest('a, button, input, textarea, .row-item')) {
+        ring.style.transform = 'translate(-50%,-50%) scale(1.7)';
+        ring.style.opacity = '.15';
+      }
+    });
+
+    document.addEventListener('mouseout', e => {
+      if (e.target.closest('a, button, input, textarea, .row-item')) {
+        ring.style.transform = 'translate(-50%,-50%) scale(1)';
+        ring.style.opacity = '.35';
+      }
+    });
+  }
+
+  const initialPage = location.hash.replace('#', '');
+  const validPage = pages.includes(initialPage) ? initialPage : 'home';
+  history.replaceState({ page: validPage }, '', '#' + validPage);
+  showPage(validPage);
+
+  window.addEventListener('popstate', e => {
+    const page = e.state?.page || 'home';
+    showPage(page);
+  });
+
+    /* CHATBOT */
+  const chatbotToggle = document.getElementById('chatbot-toggle');
+  const chatbotBox = document.getElementById('chatbot-box');
+  const chatbotClose = document.getElementById('chatbot-close');
+  const chatbotForm = document.getElementById('chatbot-form');
+  const chatbotInput = document.getElementById('chatbot-input');
+  const chatbotMessages = document.getElementById('chatbot-messages');
+
+  function appendMessage(type, content) {
+    const msg = document.createElement('div');
+    msg.className = type === 'user' ? 'user-msg' : 'bot-msg';
+    msg.innerHTML = content;
+    chatbotMessages.appendChild(msg);
+    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+  }
+
+  function sendSuggestion(text) {
+    chatbotInput.value = text;
+    handleChat(text);
+  }
+
+  function openChatbot() {
+    chatbotBox.classList.add('open');
+    chatbotInput.focus();
+  }
+
+  function closeChatbot() {
+    chatbotBox.classList.remove('open');
+  }
+
+  chatbotToggle?.addEventListener('click', openChatbot);
+  chatbotClose?.addEventListener('click', closeChatbot);
+
+  chatbotForm?.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const text = chatbotInput.value.trim();
+    if (!text) return;
+    handleChat(text);
+  });
+
+  function handleChat(text) {
+    appendMessage('user', text);
+    chatbotInput.value = '';
+
+    const reply = getBotReply(text.toLowerCase());
+    setTimeout(() => {
+      appendMessage('bot', reply);
+    }, 350);
+  }
+
+  function getBotReply(text) {
+    if (text.includes('about') || text.includes('who are you') || text.includes('muhammad')) {
+      return `
+        Muhammad Bintang Setya is a Mechanical Engineering Master's student at Aalto University, with experience in solid mechanics, 3D CAD, additive manufacturing, and simulation.<br>
+        <a class="chat-link-btn" href="#home" onclick="event.preventDefault(); goTo('home')">Go to Home →</a>
+      `;
+    }
+
+    if (text.includes('research') || text.includes('thesis')) {
+      return `
+        You can explore the Research section about riveted double shear metal joints, fastener flexibility, FEM modelling, and stress intensity factor analysis.<br>
+        <a class="chat-link-btn" href="#research" onclick="event.preventDefault(); goTo('research')">Open Research →</a>
+      `;
+    }
+
+    if (text.includes('work') || text.includes('experience') || text.includes('intern')) {
+      return `
+        The Works section includes experience from:<br><br>
+        • PT. Bringin Inti Teknologi (drone inspection for mortgage field validation)<br>
+        • PT. Dirgantara Indonesia (fatigue and fracture mechanics / FEM analysis)<br>
+        <a class="chat-link-btn" href="#works" onclick="event.preventDefault(); goTo('works')">Open Works →</a>
+      `;
+    }
+
+    if (text.includes('project') || text.includes('monterro') || text.includes('bit-o') || text.includes('dolya')) {
+      return `
+        The Projects section includes:<br><br>
+        • Monterro — ESP32 hiking assistant<br>
+        • Bit-o — wearable menstrual cramp reliever<br>
+        • DOLYA — mine-detecting drone<br>
+        <a class="chat-link-btn" href="#projects" onclick="event.preventDefault(); goTo('projects')">Open Projects →</a>
+      `;
+    }
+
+    if (text.includes('mini') || text.includes('other projects')) {
+      return `
+        The Other Projects section shows additional hands-on engineering work like CAD/CAM, rock crusher design, Formula Student pneumatic DRS, and UAV builds.<br>
+        <a class="chat-link-btn" href="#mini-projects" onclick="event.preventDefault(); goTo('mini-projects')">Open Other Projects →</a>
+      `;
+    }
+
+    if (text.includes('contact') || text.includes('hire') || text.includes('assist') || text.includes('help')) {
+      return `
+        You can use this portfolio to explore Muhammad's background, research, work experience, and projects. A next step would be adding a dedicated Contact section with email, LinkedIn, and GitHub.
+      `;
+    }
+
+    return `
+      I can help you navigate this portfolio.<br><br>
+      Try asking:<br>
+      • Tell me about Muhammad<br>
+      • Show me research<br>
+      • Show me works<br>
+      • Show me projects
+    `;
+  }
+
+</script>
+</body>
+</html>
