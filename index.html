@@ -559,7 +559,7 @@
         <div class="menu-btn-row">
           <div class="menu-links-expand">
             <a href="#" onclick="goTo('home')">Home</a>
-            <a href="#" onclick="goTo('recentworks')">Recent Works</a>
+            <a href="#recentworks" onclick="goTo('recentworks')">Recent Works</a>
           </div>
           <button class="menu-toggle">Click Here! ≡</button>
         </div>
@@ -939,30 +939,9 @@
               <img src="mini-projects/autodesk_inventor.png" style="height:32px; width:auto; object-fit:contain;"/>
             </div>
           </div>
+           <a href="#recentworks" onclick="event.preventDefault(); goTo('recentworks')" style="font-size:14px; font-weight:700; color:var(--ink); text-decoration:underline; cursor:none;">← Back to Recent Works</a>
         </div>
       </div>
-
-      <!-- MINI CARD 4 -->
-      <div style="position:relative; width:100%; border-radius:32px; overflow:hidden; min-height:420px; background:var(--island-2);">
-        <div style="position:absolute; inset:0; background-image:url('mini-projects/uav.png'); background-size:cover; background-position:center; opacity:0.25;"></div>
-        <video autoplay muted loop playsinline style="position:absolute; right:48px; top:40%; transform:translateY(-50%); width:38%; height:auto; object-fit:cover; border-radius:48px; z-index:1;">
-          <source src="mini-projects/BRI_Drone_Project.mp4" type="video/mp4">
-        </video>
-        <div style="position:relative; z-index:2; padding:56px 48px; max-width:55%; display:flex; flex-direction:column; gap:20px; height:100%;">
-          <h2 style="font-family:'Nunito',serif; font-size:clamp(28px,3vw,48px); font-weight:700; line-height:1.15; color:var(--ink); text-shadow: 1px 1px 0 #a8a49c, 2px 2px 0 #a8a49c, 3px 3px 0 #a8a49c, 4px 4px 0 #a8a49c, 5px 5px 0 #a8a49c, 6px 6px 8px rgba(0,0,0,0.3);">Why Send Teams to Inspect If a Drone Can Inspect First?</h2>
-          <p style="font-size:16px; line-height:1.75; color:var(--ink); text-align:justify; font-weight:400;">
-          <div style="display:flex; align-items:center; gap:16px; margin-top:8px;">
-            <a href="#" style="display:flex; align-items:center; justify-content:space-between; width:260px; padding:18px 28px; background:var(--island-bg); color:var(--ink); text-decoration:none; border-radius:18px; font-size:16px; font-weight:700;">
-              <span>Check it out!</span>
-              <span style="font-size:20px;">→</span>
-            </a>
-            <div style="z-index:2; width:120px; height:80px; background:var(--island-bg); border-radius:16px; display:flex; align-items:center; justify-content:center; opacity:0.9;">
-              <img src="mini-projects/autodesk_inventor.png" style="height:32px; width:auto; object-fit:contain;"/>
-            </div>
-          </div>
-        </div>
-      </div>
-      <a href="#recentworks" onclick="event.preventDefault(); goTo('recentworks')" style="font-size:14px; font-weight:700; color:var(--ink); text-decoration:underline; cursor:none;">← Back to Recent Works</a>
     </div>
   </section>
 
