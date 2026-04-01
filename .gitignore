@@ -1,0 +1,32 @@
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor settings
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Env files
+.env
+.env.*
+
+# Node / build output
+node_modules/
+dist/
+build/
+
+# Cache
+.cache/
+.parcel-cache/
+
+# Python
+__pycache__/
+*.pyc
+
+# Keep Git LFS tracking for videos, but ignore temp exports if needed
+*.tmp
+*.bak
