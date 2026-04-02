@@ -455,6 +455,13 @@
       font-weight: 700;
     }
 
+    .project-mobile-card {
+    border-radius: 24px;
+    padding: 16px;
+    background: transparent;
+    backdrop-filter: none;
+  }
+
     @media (max-width: 640px) {
       #chatbot-widget {
         right: 12px;
@@ -547,6 +554,13 @@
     max-width: 100%;
     height: auto;
   }
+
+  .project-mobile-card {
+    background: rgba(201, 192, 187, 0.534);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 24px;
+  }
 }
 
 @media (max-width: 640px) {
@@ -608,6 +622,13 @@
   #chatbot-box {
     width: min(360px, calc(100vw - 24px));
     height: 70vh;
+  }
+  
+  .project-mobile-card {
+    background: rgba(201, 192, 187, 0.534);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 24px;
   }
 }
 
@@ -792,6 +813,7 @@
     <div class="section-wrap" style="max-width:1400px; gap:18px; margin-bottom:0;">
 
       <!-- BRI -->
+    <div class="project-mobile-card">
       <div style="position:relative; width:100%; height:480px; aspect-ratio:5/4; display:flex; align-items:center; justify-content:center;">
         <div id="carousel-bri" style="display:flex; gap:16px; align-items:center; justify-content:center; width:100%; height:100%; transition:transform .4s ease;"></div>
         <button onclick="slideCard('bri',-1)" style="position:absolute; left:0; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.8); border:none; border-radius:50%; width:40px; height:40px; font-size:18px; cursor:none; display:grid; place-items:center; z-index:10;">‹</button>
@@ -822,8 +844,10 @@
           </p>
         </div>
       </div>
+    </div>
 
       <!-- PTDI -->
+    <div class="project-mobile-card">
       <div style="position:relative; width:100%; height:480px; aspect-ratio:5/4; display:flex; align-items:center; justify-content:center; margin-top:48px;">
         <div id="carousel-ptdi" style="display:flex; gap:16px; align-items:center; justify-content:center; width:100%; height:100%; transition:transform .4s ease;"></div>
         <button onclick="slideCard('ptdi',-1)" style="position:absolute; left:0; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.8); border:none; border-radius:50%; width:40px; height:40px; font-size:18px; cursor:none; display:grid; place-items:center; z-index:10;">‹</button>
@@ -855,7 +879,8 @@
             Based on the results of the stress analysis, the crack growth rates and fatigue cycles were also calculated to determine the lifespan of the components. 
             The analysis results were used to help determine intervals for maintenance and inspections and to support the evaluation of structural durability. 
             This work managed to evaluate the safety and reliability of aircraft structures by using simulation-based engineering analysis.
-
+          </p>
+          </div>
         </div>
       </div>
 
@@ -877,6 +902,7 @@
     <div class="section-wrap" style="max-width:1400px;">
 
       <!-- PROJECT 1 - Monterro -->
+    <div class="project-mobile-card">
       <div style="position:relative; width:100%; height:480px; aspect-ratio:5/4; display:flex; align-items:center; justify-content:center;">
         <div id="carousel-monterro" style="display:flex; gap:16px; align-items:center; justify-content:center; width:100%; height:100%; transition:transform .4s ease;"></div>
         <button onclick="slideCard('monterro',-1)" style="position:absolute; left:0; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.8); border:none; border-radius:50%; width:40px; height:40px; font-size:18px; cursor:none; display:grid; place-items:center; z-index:10;">‹</button>
@@ -901,8 +927,10 @@
           </p>
         </div>
       </div>
+    </div>
 
       <!-- PROJECT 2 - Bit-O -->
+    <div class="project-mobile-card">
       <div style="position:relative; width:100%; height:480px; aspect-ratio:5/4; display:flex; align-items:center; justify-content:center; margin-top:48px;">
         <div id="carousel-bit-o" style="display:flex; gap:16px; align-items:center; justify-content:center; width:100%; height:100%; transition:transform .4s ease;"></div>
         <button onclick="slideCard('bit-o',-1)" style="position:absolute; left:0; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.8); border:none; border-radius:50%; width:40px; height:40px; font-size:18px; cursor:none; display:grid; place-items:center; z-index:10;">‹</button>
@@ -927,10 +955,12 @@
             The prototype was made to be small, easy to use, and able to be used by the same person multiple times. The Arduino Nano microcontroller controls the intensity and frequency of the TENS signal, and a rotary potentiometer allows users adjust these settings to make them more comfortable. Electrodes on the skin provide the TENS signal to the area which hurts to help relieve menstrual pain. The device runs on a rechargeable lithium-ion battery, which makes it easy to carry and use.<br></br>
             The project was developed under AaltoES Ignite 2025 program, and successfully reached the final round of the program and presented at Demo Day. Future development of the project will be focused on improving the compactness, expanding user testing of the product, and refining the design before starting to look for funding and manufacturing partners to release the product into the market.
           </p>
+          </div>
         </div>
       </div>
 
       <!-- PROJECT 3 - PdP -->
+    <div class="project-mobile-card">
       <div style="position:relative; width:100%; height:480px; aspect-ratio:5/4; display:flex; align-items:center; justify-content:center; margin-top:48px;">
         <div id="carousel-PdP" style="display:flex; gap:16px; align-items:center; justify-content:center; width:100%; height:100%; transition:transform .4s ease;"></div>
         <button onclick="slideCard('PdP',-1)" style="position:absolute; left:0; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.8); border:none; border-radius:50%; width:40px; height:40px; font-size:18px; cursor:none; display:grid; place-items:center; z-index:10;">‹</button>
@@ -964,6 +994,7 @@
           </a>
         </div>
       </div>
+    </div>
 
     </div>
   </section>
