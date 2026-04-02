@@ -203,6 +203,73 @@
       object-position: top center;
     }
 
+    .hero-socials-minimal {
+      display: flex;
+      align-items: center;
+      gap: 34px;
+      margin-top: 28px;
+      color: #4c4a4a;
+      opacity: 0;
+      animation: fadeUp .6s .78s forwards;
+    }
+
+    .hero-social-minimal {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      color: inherit;
+      transition: transform .2s ease, opacity .2s ease, color .2s ease;
+      cursor: none;
+    }
+
+    .hero-social-minimal svg {
+      width: 46px;
+      height: 46px;
+    }
+
+    .hero-social-minimal:hover {
+      transform: translateY(-2px);
+      opacity: .75;
+      color: var(--ink);
+    }
+
+    .hero-social-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      white-space: nowrap;
+      color: inherit;
+    }
+
+    .hero-social-grabcad {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: inherit;
+      text-decoration: none;
+
+    }
+
+    .hero-social-grabcad svg {
+      width: 42px;
+      height: 42px;
+    }
+
+    .hero-social-grabcad rect,
+    .hero-social-grabcad path {
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 4.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .hero-social-grabcad:hover {
+      transform: translateY(-2px);
+      opacity: .75;
+      color: var(--ink);
+    }
+
     .row-item {
       background: var(--island-bg);
       border-radius: 50px;
@@ -551,37 +618,80 @@
   <div class="cur-dot" id="dot"></div>
   <div class="cur-ring" id="ring"></div>
 
-  <!-- PAGE 1 - Home -->
-  <section id="home" style="min-height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; padding:24px 16px; gap:12px;">
-    <div class="section-wrap">
+ <!-- PAGE 1 - Home -->
+<section id="home" style="min-height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; padding:24px 16px; gap:12px;">
+  <div class="section-wrap">
 
-      <div class="menu-wrap">
-        <div class="menu-btn-row">
-          <div class="menu-links-expand">
-            <a href="#" onclick="goTo('home')">Home</a>
-            <a href="#recentworks" onclick="goTo('recentworks')">Recent Works</a>
-          </div>
-          <button class="menu-toggle">Click Here! ≡</button>
+    <div class="menu-wrap">
+      <div class="menu-btn-row">
+        <div class="menu-links-expand">
+          <a href="#" onclick="goTo('home')">Home</a>
+          <a href="#" onclick="event.preventDefault(); goTo('recentworks')">Recent Works</a>
+        </div>
+        <button class="menu-toggle">Click Here! ≡</button>
+      </div>
+    </div>
+
+    <div class="island hero-island">
+      <div class="hero-left">
+        <p class="hero-intro">Muhammad Bintang Setya</p>
+        <h1 class="hero-h1">A Mechanical Engineer &amp; part-time Developer</h1>
+        <p class="hero-sub">
+          I am Muhammad Bintang Setya, a Mechanical Engineering Master's student at Aalto University, majoring in Solid Mechanics. With a technical background in 3D Modelling and Additive Manufacturing. I am a good problem-solver, good communicator, and quick learner. I have a strong interest in and hands-on experience with 3D CAD design and modelling, as well as in assessing structural strength through engineering calculations and simulations.
+        </p>
+
+        <a href="#chatbot-widget" onclick="event.preventDefault(); openChatbot()" class="hero-cta">
+          How can I assist you? <span class="hero-cta-icon">→</span>
+        </a>
+
+        <div class="hero-socials-minimal">
+          <a href=https://www.instagram.com/mbintangsa03/ target="_blank" rel="noopener" aria-label="Instagram" class="hero-social-minimal">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="3.5" y="3.5" width="17" height="17" rx="5" stroke="currentColor" stroke-width="1.8"/>
+              <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/>
+              <circle cx="17.3" cy="6.7" r="1.1" fill="currentColor"/>
+            </svg>
+          </a>
+
+          <a href="https://www.linkedin.com/in/muhammad-bintang-setya-abimanyu-81063316b/" target="_blank" rel="noopener" aria-label="LinkedIn" class="hero-social-minimal">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M6.94 8.5A1.56 1.56 0 1 1 6.94 5.38a1.56 1.56 0 0 1 0 3.12ZM5.6 9.74h2.67V18H5.6V9.74Zm4.35 0h2.56v1.13h.04c.36-.68 1.22-1.4 2.5-1.4 2.68 0 3.17 1.76 3.17 4.05V18h-2.67v-3.95c0-.94-.02-2.15-1.31-2.15-1.31 0-1.51 1.02-1.51 2.08V18H9.95V9.74Z"/>
+            </svg>
+          </a>
+
+          <a href="mailto:your@email.com" aria-label="Email" class="hero-social-minimal">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M3 6.75A1.75 1.75 0 0 1 4.75 5h14.5A1.75 1.75 0 0 1 21 6.75v10.5A1.75 1.75 0 0 1 19.25 19H4.75A1.75 1.75 0 0 1 3 17.25V6.75Zm1.8.22 7.2 5.28 7.2-5.28"/>
+            </svg>
+          </a>
+
+          <a href="https://grabcad.com/muhammad.bintang.setya-1" target="_blank" rel="noopener" aria-label="CAD Portfolio" class="hero-social-grabcad">
+            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <!-- 3D cube icon -->
+              <!-- Top face -->
+              <polygon points="32,8 54,20 32,32 10,20"
+                      fill="none" stroke="currentColor" stroke-width="3.5" stroke-linejoin="round"/>
+              <!-- Left face -->
+              <polyline points="10,20 10,44 32,56 32,32"
+                        fill="none" stroke="currentColor" stroke-width="3.5" stroke-linejoin="round"/>
+              <!-- Right face -->
+              <polyline points="54,20 54,44 32,56"
+                        fill="none" stroke="currentColor" stroke-width="3.5" stroke-linejoin="round"/>
+            </svg>
+            <span class="hero-social-label">CAD Portfolio</span>
+          </a>
         </div>
       </div>
 
-      <div class="island hero-island">
-        <div class="hero-left">
-          <p class="hero-intro">Muhammad Bintang Setya</p>
-          <h1 class="hero-h1">A Mechanical Engineer &amp; part-time Developer</h1>
-          <p class="hero-sub">I am Muhammad Bintang Setya, a Mechanical Engineering Master's student at Aalto University, majoring in Solid Mechanics. With a technical background in 3D Modelling and Additive Manufacturing. I am a good problem-solver, good communicator, and quick learner. I have a strong interest in and hands-on experience with 3D CAD design and modelling, as well as in assessing structural strength through engineering calculations and simulations.</p>
-          <a href="#chatbot-widget" onclick="event.preventDefault(); openChatbot()" class="hero-cta">
-            How can I assist you? <span class="hero-cta-icon">→</span>
-          </a>
-        </div>
-        <div class="hero-right">
-          <div class="hero-photo-wrap">
-            <img src="pas_foto.jpg" alt="Muhammad Bintang Setya" />
-          </div>
+      <div class="hero-right">
+        <div class="hero-photo-wrap">
+          <img src="pas_foto.jpg" alt="Muhammad Bintang Setya" />
         </div>
       </div>
     </div>
-  </section>
+
+  </div>
+</section>
 
   <!-- PAGE 2 - Recent Works -->
   <section id="recentworks" style="min-height:100vh; display:none; flex-direction:column; justify-content:center; align-items:center; padding:24px 16px; gap:28px; width:100%; height: auto;">
@@ -590,32 +700,32 @@
       <div class="menu-wrap">
         <div class="menu-btn-row">
           <div class="menu-links-expand">
-            <a href="#" onclick="goTo('home')">Home</a>
-            <a href="#" onclick="goTo('recentworks')">Recent Works</a>
+            <a href="#" onclick="event.preventDefault(); goTo('home')">Home</a>
+            <a href="#" onclick="event.preventDefault(); goTo('recentworks')">Recent Works</a>
           </div>
           <button class="menu-toggle">Click Here! ≡</button>
         </div>
       </div>
 
-      <div class="row-item" onclick="goTo('research')" style="background-image:url('recent-works/research.png'); background-size:cover; background-position:center; position:relative; overflow:hidden;">
+      <div class="row-item" onclick="event.preventDefault(); goTo('research')" style="background-image:url('recent-works/research.png'); background-size:cover; background-position:center; position:relative; overflow:hidden;">
         <div style="position:absolute; inset:0; background:rgba(233,229,220,0.75);"></div>
         <span style="position:relative; z-index:1; color:var(--ink); font-weight:700;">Research</span>
         <span style="position:relative; z-index:1;">📄</span>
       </div>
 
-      <div class="row-item" onclick="goTo('works')" style="background-image:url('recent-works/works.png'); background-size:cover; background-position:center; position:relative; overflow:hidden;">
+      <div class="row-item" onclick="event.preventDefault(); goTo('works')" style="background-image:url('recent-works/works.png'); background-size:cover; background-position:center; position:relative; overflow:hidden;">
         <div style="position:absolute; inset:0; background:rgba(233,229,220,0.75);"></div>
         <span style="position:relative; z-index:1; color:var(--ink); font-weight:700;">Works</span>
         <span style="position:relative; z-index:1;">💼</span>
       </div>
 
-      <div class="row-item" onclick="goTo('projects')" style="background-image:url('recent-works/projects.png'); background-size:cover; background-position:center; position:relative; overflow:hidden;">
+      <div class="row-item" onclick="event.preventDefault(); goTo('projects')" style="background-image:url('recent-works/projects.png'); background-size:cover; background-position:center; position:relative; overflow:hidden;">
         <div style="position:absolute; inset:0; background:rgba(233,229,220,0.75);"></div>
         <span style="position:relative; z-index:1; color:var(--ink); font-weight:700;">Projects</span>
         <span style="position:relative; z-index:1;">⚙️</span>
       </div>
 
-      <div class="row-item" onclick="goTo('mini-projects')" style="background-image:url('recent-works/mini-projects.png'); background-size:cover; background-position:center; position:relative; overflow:hidden;">
+      <div class="row-item" onclick="event.preventDefault(); goTo('mini-projects')" style="background-image:url('recent-works/mini-projects.png'); background-size:cover; background-position:center; position:relative; overflow:hidden;">
         <div style="position:absolute; inset:0; background:rgba(233,229,220,0.75);"></div>
         <span style="position:relative; z-index:1; color:var(--ink); font-weight:700;">Other Projects</span>
         <span style="position:relative; z-index:1;">🛠️</span>
@@ -629,8 +739,8 @@
     <div class="menu-wrap">
       <div class="menu-btn-row">
         <div class="menu-links-expand">
-          <a href="#" onclick="goTo('home')">Home</a>
-          <a href="#" onclick="goTo('recentworks')">Recent Works</a>
+          <a href="#" onclick="event.preventDefault(); goTo('home')">Home</a>
+          <a href="#" onclick="event.preventDefault(); goTo('recentworks')">Recent Works</a>
         </div>
         <button class="menu-toggle">Click Here! ≡</button>
       </div>
@@ -672,8 +782,8 @@
     <div class="menu-wrap">
       <div class="menu-btn-row">
         <div class="menu-links-expand">
-          <a href="#" onclick="goTo('home')">Home</a>
-          <a href="#" onclick="goTo('recentworks')">Recent Works</a>
+          <a href="#" onclick="event.preventDefault(); goTo('home')">Home</a>
+          <a href="#" onclick="event.preventDefault(); goTo('recentworks')">Recent Works</a>
         </div>
         <button class="menu-toggle">Click Here! ≡</button>
       </div>
@@ -965,10 +1075,10 @@
           Hi! I can help you explore this portfolio.<br><br>
           Try asking:
           <div class="chat-suggestions">
-            <button onclick="sendSuggestion('Tell me about Muhammad')">About</button>
-            <button onclick="sendSuggestion('Show me research')">Research</button>
-            <button onclick="sendSuggestion('Show me works')">Works</button>
-            <button onclick="sendSuggestion('Show me projects')">Projects</button>
+            <button onclick="sendSuggestion('Tell me about M. Bintang Setya')">About</button>
+            <button onclick="sendSuggestion('Show me his research')">Research</button>
+            <button onclick="sendSuggestion('Show me his works')">Works</button>
+            <button onclick="sendSuggestion('Show me his projects')">Projects</button>
           </div>
         </div>
       </div>
@@ -1049,7 +1159,7 @@
     document.body.style.overflowY = 'auto';
   } else {
     document.body.style.overflow =
-      (page === 'projects' || page === 'works' || page === 'mini-projects') ? 'auto' : 'hidden';
+      (page === 'home' ||page === 'projects' || page === 'works' || page === 'mini-projects') ? 'auto' : 'hidden';
   }
 
   window.scrollTo(0, 0);
